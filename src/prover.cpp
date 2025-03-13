@@ -11,6 +11,8 @@
 #include "binfile_utils.hpp"
 #include "fileloader.hpp"
 
+#include <chrono>
+
 using json = nlohmann::json;
 
 
@@ -428,6 +430,8 @@ groth16_prover(
         return error;
     }
 
+
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     error = groth16_prover_prove(
                     prover,
                     wtns_buffer,
@@ -438,6 +442,9 @@ groth16_prover(
                     public_size,
                     error_msg,
                     error_msg_maxsize);
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+
+    std::cout << "Proving took " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
 
     groth16_prover_destroy(prover);
 
