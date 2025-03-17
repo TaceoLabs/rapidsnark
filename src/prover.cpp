@@ -444,7 +444,7 @@ groth16_prover(
                     error_msg_maxsize);
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
-    std::cout << "Proving took " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
+    std::cout << "Proving took " << static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count()) / 1000. << " ms" << std::endl;
 
     groth16_prover_destroy(prover);
 
